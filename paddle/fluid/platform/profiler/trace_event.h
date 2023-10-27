@@ -82,12 +82,14 @@ struct CommunicationSupplementEvent {
       const std::string& comm_type,
       const std::map<std::string, std::vector<std::vector<int64_t>>>&
           comm_groups,
+      const std::vector<int64_t>& comm_group,
       uint64_t comm_id,
       uint64_t process_id,
       uint64_t thread_id)
       : timestamp_ns(timestamp_ns),
         comm_type(comm_type),
         comm_groups(comm_groups),
+        comm_group(comm_group),
         comm_id(comm_id),
         process_id(process_id),
         thread_id(thread_id) {}
@@ -97,6 +99,8 @@ struct CommunicationSupplementEvent {
   std::string comm_type;
   // comm groups
   std::map<std::string, std::vector<std::vector<int64_t>>> comm_groups;
+  // comm group
+  std::vector<int64_t> comm_group;
   // comm id
   uint64_t comm_id;
   // process id of the record

@@ -642,7 +642,7 @@ std::shared_ptr<ProcessGroup::Task> ProcessGroupCustom::RunFnInXCCLEnv(
           {"param", {comm_type_}},
           {"group", {comm_group_}},
       };
-  phi::RecordCommInfoSupplement("meta_info ", comm_groups);
+  phi::RecordCommInfoSupplement("meta_info ", comm_groups, comm_group_);
 
   fn(xccl_stream);
 
@@ -782,7 +782,7 @@ std::shared_ptr<ProcessGroup::Task> ProcessGroupCustom::Collective(
               {"param", {comm_type_}},
               {"group", {comm_group_}},
           };
-      phi::RecordCommInfoSupplement("meta_info ", comm_groups);
+      phi::RecordCommInfoSupplement("meta_info ", comm_groups, comm_group_);
 
       fn(inputs[i],
          outputs[i],
@@ -849,7 +849,7 @@ std::shared_ptr<ProcessGroup::Task> ProcessGroupCustom::PointToPoint(
               {"param", {comm_type_}},
               {"group", {comm_group_}},
           };
-      phi::RecordCommInfoSupplement("meta_info ", comm_groups);
+      phi::RecordCommInfoSupplement("meta_info ", comm_groups, comm_group_);
 
       fn(tensors[i],
          places_to_ctx_.at(key)[i]->xccl_comm(),

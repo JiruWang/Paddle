@@ -296,7 +296,8 @@ RecordCommInfoSupplement::RecordCommInfoSupplement(
     const std::string &type,
     const std::vector<
         std::pair<const char *, std::vector<std::vector<int64_t>>>>
-        &comm_groups) {
+        &comm_groups,
+    const std::vector<int64_t> &comm_group) {
   if (FLAGS_enable_host_event_recorder_hook == false) {
     return;
   }
@@ -309,7 +310,7 @@ RecordCommInfoSupplement::RecordCommInfoSupplement(
     comm_groups_[std::string(comm_groups[i].first)] = comm_groups[i].second;
   }
   HostEventRecorder<CommunicationSupplementOriginEvent>::GetInstance()
-      .RecordEvent(PosixInNsec(), type, comm_groups_, comm_id);
+      .RecordEvent(PosixInNsec(), type, comm_groups_, comm_group, comm_id);
 }
 
 bool RecordCommInfoSupplement::IsEnabled() {

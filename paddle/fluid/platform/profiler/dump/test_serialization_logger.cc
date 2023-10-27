@@ -102,7 +102,7 @@ TEST(SerializationLoggerTest, dump_case0) {
       {"group", {comm_group_}},
   };
   comm_supplement_events.emplace_back(
-      31600, "op3", comm_groups, comm_id, 10, 11);
+      31600, "op3", comm_groups, comm_group_, comm_id, 10, 11);
 
   runtime_events.emplace_back(
       std::string("cudalaunch1"), 15000, 17000, 10, 10, 1, 0);

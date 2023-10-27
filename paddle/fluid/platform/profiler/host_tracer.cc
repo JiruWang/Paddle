@@ -143,6 +143,7 @@ void ProcessCommunicationSupplementEvents(
       CommunicationSupplementEvent event;
       event.timestamp_ns = evt.timestamp_ns;
       event.comm_type = evt.comm_type;
+      event.comm_group = evt.comm_group_;
       std::map<std::string, std::vector<std::vector<int64_t>>> comm_groups;
       std::string callstack;
       for (const auto& comm_group : evt.comm_groups) {

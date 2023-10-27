@@ -174,10 +174,12 @@ void ChromeTracingLogger::LogHostTraceEventNode(
     callstack = std::regex_replace(callstack, std::regex("\n"), "\\n");
   }
   std::map<std::string, std::vector<std::vector<int64_t>>> comm_groups;
+  std::vector<int64_t> comm_group;
   CommunicationSupplementEventNode* comm_supplement_node =
       host_node.GetCommunicationSupplementEventNode();
   if (comm_supplement_node != nullptr) {
     comm_groups = comm_supplement_node->CommGroups();
+    comm_group = comm_supplement_node->Get_comm_groups();
   }
   switch (host_node.Type()) {
     case TracerEventType::ProfileStep:
@@ -258,7 +260,8 @@ void ChromeTracingLogger::LogHostTraceEventNode(
     "args": {
       "start_time": "%.3f us",
       "end_time": "%.3f us",
-      "comm_info": %s
+      "comm_info": %s,
+      "comm_group": %s
     }
   },
   )JSON"),
@@ -271,7 +274,8 @@ void ChromeTracingLogger::LogHostTraceEventNode(
           StringTracerEventType(host_node.Type()),
           nsToUsFloat(host_node.StartNs(), start_time_),
           nsToUsFloat(host_node.EndNs(), start_time_),
-          json_dict(comm_groups).c_str());
+          json_dict(comm_groups).c_str(),
+          json_dict(comm_group).c_str());
       break;
     case TracerEventType::CudaRuntime:
     case TracerEventType::Kernel:
